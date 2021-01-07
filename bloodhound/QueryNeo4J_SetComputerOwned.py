@@ -15,14 +15,14 @@ searchString = sys.argv[1]
 
 query = {
     "statements": [ {
-        "statement": "MATCH (n:User) WHERE n.name contains '" + searchString.upper() + "' RETURN n"
+        "statement": "MATCH (n:Computer) WHERE n.name = '" + searchString.upper() + "' SET n.owned = True"
     } ]
 }
 
 res = requests.post(neo4jurl + 'db/data/transaction/commit', auth=(neo4juser, neo4jpass), json=query)
-resjson = res.json()
-try:
-    for data in resjson['results'][0]['data']:
-        print("{} : {}".format(data['row'][0]['name'], data['row'][0]['enabled']))
-except:
-    pass
+
+status = "Failed"
+if res.status_code == 200:
+    status = "Success"
+
+print("{} - {}".format(searchString.upper(), status))

@@ -7,15 +7,9 @@ neo4jurl = 'http://localhost:7474/'
 neo4juser = 'neo4j'
 neo4jpass = 'BloodHound'
 
-if len(sys.argv) != 2:
-    print("Usage: {} string".format(sys.argv[0]))
-    exit()
-
-searchString = sys.argv[1]
-
 query = {
     "statements": [ {
-        "statement": "MATCH (n:User) WHERE n.name contains '" + searchString.upper() + "' RETURN n"
+        "statement": "MATCH (n:User) WHERE n.description IS NOT null RETURN n"
     } ]
 }
 
@@ -23,6 +17,6 @@ res = requests.post(neo4jurl + 'db/data/transaction/commit', auth=(neo4juser, ne
 resjson = res.json()
 try:
     for data in resjson['results'][0]['data']:
-        print("{} : {}".format(data['row'][0]['name'], data['row'][0]['enabled']))
+        print("{} : {}".format(data['row'][0]['name'], data['row'][0]['description']))
 except:
     pass

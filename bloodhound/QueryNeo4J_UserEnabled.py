@@ -5,7 +5,7 @@ import requests
 
 neo4jurl = 'http://localhost:7474/'
 neo4juser = 'neo4j'
-neo4jpass = 'Bloodhound'
+neo4jpass = 'BloodHound'
 
 if len(sys.argv) != 2:
     print("Usage: {} filename".format(sys.argv[0]))
