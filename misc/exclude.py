@@ -66,6 +66,7 @@ with open(scopeFile,"r") as f:
                 scopeList.add(address)
             else:
                 print("Invalid scope address line: [{}] {}".format(i,line))
+print("Initial scope size: {:,} IPs".format(len(scopeList)))
 
 i = 0
 with open(excludeFile,"r") as f:
@@ -78,9 +79,11 @@ with open(excludeFile,"r") as f:
                 excludeList.add(address)
             else:
                 print("Invalid exclusion address line: [{}] {}".format(i,line))
+print("Exclusion size: {:,} IPs".format(len(excludeList)))
 
 print("Calculating final scope...")
 finalScope = scopeList ^ excludeList
+print("Final scope size: {:,} IPs".format(len(finalScope)))
 
 with open(outputFile, "w") as f:
     print("Writing output...")
