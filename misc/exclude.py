@@ -84,7 +84,7 @@ finalScope = scopeList ^ excludeList
 
 with open(outputFile, "w") as f:
     print("Writing output...")
-    for cidr in finalScope.iter_cidrs():
-        f.write(str(cidr) + "\n")
+    for iprange in finalScope.iter_ipranges():
+        f.write(str(iprange) + "\n")
 
 print("Done! New scope written to: {}".format(outputFile))
