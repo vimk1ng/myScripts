@@ -82,7 +82,7 @@ with open(excludeFile,"r") as f:
 print("Exclusion size: {:,} IPs".format(len(excludeList)))
 
 print("Calculating final scope...")
-finalScope = scopeList ^ excludeList
+finalScope = scopeList - excludeList
 print("Final scope size: {:,} IPs".format(len(finalScope)))
 
 with open(outputFile, "w") as f:
