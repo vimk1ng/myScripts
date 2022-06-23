@@ -4,6 +4,7 @@ import os
 import re
 import tempfile
 import tarfile
+import subprocess
 
 baseurl = 'https://download.cobaltstrike.com'
 key = os.environ['COBALT_STRIKE_KEY']
@@ -26,8 +27,12 @@ fd, cspath = tempfile.mkstemp(suffix='.tgz',prefix='cstrike_')
 with os.fdopen(fd, 'wb') as f:
     f.write(resp.content)
 
+if os.path.exists('/opt/cobaltstrike'):
+    os.system(f'chown -R {os.getlogin()}:{os.getlogin()} /opt/cobaltstrike')
+
 tf = tarfile.open(cspath)
 tf.extractall('/opt')
 tf.close()
-
 os.remove(cspath)
+
+subprocess.run('/opt/cobaltstrike/update', cwd='/opt/cobaltstrike', text=True, input=f'{key}\n')
